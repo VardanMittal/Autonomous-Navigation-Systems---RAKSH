@@ -1,8 +1,6 @@
 # Vision_NavigationRAKSH
 Autonomous Navigation with Raspberry Pi, ArUco Pose Estimation, and ESP32-IMU Integration
 
-Autonomous Navigation with Raspberry Pi, ArUco Pose Estimation, and ESP32-IMU Integration
-
 This GitHub repository showcases a comprehensive solution for autonomous navigation using a Raspberry Pi, ArUco pose estimation, and an ESP32 with an integrated IMU sensor. The project aims to create a reliable and robust autonomous navigation system for various applications, such as robotics, drones, and vehicles.
 
 Key Features:
