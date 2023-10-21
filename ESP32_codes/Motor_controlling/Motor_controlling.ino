@@ -1,67 +1,124 @@
 #include <Arduino.h>
 #include <QuickPID.h>
+#include <math.h>
+/////////////////////////////////SPI DETAILS?????????????????????
+#define WheelDia 0.08
 
-// Define the motor control pin
-const int motorEnablePin = 9;
-#define encoderPIN1 2
-#define encoderPIN2 3
+float distance, speed;
+char direction;
+
+float count = distance / (pi * WheelDia);
+
+// Motor Pin Variables
+#define motorPWM 9
+#define motorIN1 5
+#define motorIN2 6
+#define motorIN3 7
+#define motorIN4 8
+#define encoderA1 2
+#define encoderA2 3
+#define encoderB1 20
+#define encoderB2 21
+
 // PID Controller parameters
-float kp = 0.6;
-float ki = 0.3;
-float kd = 0.2;
+float kp = 0.6, ki = 0.3, kd = 0.2;
 
 // PID Controller initialization
-float prevError = 0;
-float integral = 0;
+float input, output, setpoint;
 
+QuickPID PID(&input, &output, &setpoint);
 
-QuickPID &PID()
-// Hall effect encoder reading
+// Getting encoder reading (Need to think on how to use these four values togeather)
 int readEncoder()
 {
-  int enc1 = digitalRead(encoderPIN1);
-  int enc2 = digitalRead(encoderPIN2);
-  
-  return 0;
-}
-
-float pidControl(float desiredValue, float currentValue)
-{
-  float error = desiredValue - currentValue;
-  integral += error;
-  float derivative = error - prevError;
-
-  float output = kp * error + ki * integral + kd * derivative;
-
-  prevError = error;
-
-  return output;
+  int enc1 = digitalRead(encoderA1);
+  int enc2 = digitalRead(encoderA2);
+  int enc3 = digitalRead(encoderB1);
+  int enc4 = digitalRead(encoderB2);
+  return enc1;
 }
 
 void setup()
 {
-  pinMode(motorEnablePin, OUTPUT);
-  pinMode(encoderPin1, INPUT_PULLUP);
-  pinMode(encoderPin2, INPUT_PULLUP);
+  //controller setups
+  PID.SetOutputLimits(0,255);
+  //Motor Control pin setup
+  pinMode(motorPWM, OUTPUT);
+  pinMode(motorIN1, OUTPUT);
+  pinMode(motorIN2, OUTPUT);
+  pinMode(motorIN3, OUTPUT);
+  pinMode(motorIN4, OUTPUT);
+  // Encoder pin setup
+  pinMode(encoderA1, INPUT_PULLUP);
+  pinMode(encoderA2, INPUT_PULLUP);
+  pinMode(encoderB1, INPUT_PULLUP);
+  pinMode(encoderB2, INPUT_PULLUP);
+  //Serial beginner
+  Serial.begin(115200);
 }
 
 void loop()
 {
-  float desiredSpeed = 100; // Desired speed (e.g., in RPM)
-  int currentSpeed = readEncoder(); // Read the current speed from the hall effect encoder
+  // PID and PWM control signal updation
+  setpoint += count;
+  input = readEncoder();
+  output = PID.compute();
 
-  // Compute the PID output
-  float controlValue = pidControl(desiredSpeed, currentSpeed);
 
-  // Convert the control value to PWM duty cycle
-  if (controlValue > 0)
-  {
-    analogWrite(motorEnablePin, controlValue);
+  //Control logic
+  if(direction =='F'){
+    moveForward();
   }
-  else
-  {
-    analogWrite(motorEnablePin, 0);
+  else if(direction == 'B'){
+    moveBackward();
+  }
+  else if(direction == 'R'){
+    moveRight();
+  }
+  else if(direction == 'L'){
+    moveLeft();
+  }
+  else{
+    stopMotor();
   }
 
-  delay(100); // Control loop delay
+  //Final Control Signals
+  analogWrite(motorPWM, output);
+  delay(100);
+}
+
+// control Signals
+void moveForward() {
+  digitalWrite(motorIN1, HIGH);
+  digitalWrite(motorIN2, LOW);
+  digitalWrite(motorIN3, HIGH);
+  digitalWrite(motorIN4, LOW);
+}
+
+void moveBackward() {
+  digitalWrite(motorIN1, LOW);
+  digitalWrite(motorIN2, HIGH);
+  digitalWrite(motorIN3, LOW);
+  digitalWrite(motorIN4, HIGH);
+}
+
+void moveLeft() {
+  digitalWrite(motorIN1, LOW);
+  digitalWrite(motorIN2, HIGH);
+  digitalWrite(motorIN3, HIGH);
+  digitalWrite(motorIN4, LOW);
+}
+
+void moveRight() {
+  digitalWrite(motorIN1, HIGH);
+  digitalWrite(motorIN2, LOW);
+  digitalWrite(motorIN3, LOW);
+  digitalWrite(motorIN4, HIGH);
+}
+
+void stopMotor() {
+  digitalWrite(motorIN1, LOW);
+  digitalWrite(motorIN2, LOW);
+  digitalWrite(motorIN3, LOW);
+  digitalWrite(motorIN4, LOW);
 }
