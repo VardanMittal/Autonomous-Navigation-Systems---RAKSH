@@ -47,18 +47,18 @@ void loop() {
 
   /* Print out the values */
   Serial.print("Accelerometer: ");
-  Serial.print(a.acceleration.x);
+  acceration[0] += a.acceleration.x - accel_offset[0];
   Serial.print(",");
-  Serial.print(a.acceleration.y);
+  acceration[1] += a.acceleration.y - accel_offset[1];
   Serial.print(",");
-  Serial.print(a.acceleration.z);
+  acceration[2] += a.acceleration.z - accel_offset[2];
 
   Serial.print(" Gyroscope: ");
-  Serial.print(g.gyro.x);
+  gyro[0] += g.gyro.x - gyro_offset[0];
   Serial.print(",");
-  Serial.print(g.gyro.y);
+  gyro[1] += g.gyro.y - gyro_offset[1];
   Serial.print(",");
-  Serial.print(g.gyro.z);
+  gyro[2] += g.gyro.z - gyro_offset[2];
 
   // Calculate time difference
   unsigned long currTime = millis();
@@ -66,19 +66,19 @@ void loop() {
   prevTime = currTime;
 
   // Integration for velocity
-  velocity[0] += a.acceleration.x * timeDiff;
-  velocity[1] += a.acceleration.y * timeDiff;
-  velocity[2] += a.acceleration.z * timeDiff;
+  velocity[0] += acceleration[0] * timeDiff;
+  velocity[1] += acceleration[1] * timeDiff;
+  velocity[2] += acceleration[2] * timeDiff;
 
   // Integration for position
-  position[0] += velocity[0] * timeDiff + 0.5 * a.acceleration.x * timeDiff * timeDiff;
-  position[1] += velocity[1] * timeDiff + 0.5 * a.acceleration.y * timeDiff * timeDiff;
-  position[2] += velocity[2] * timeDiff + 0.5 * a.acceleration.z * timeDiff * timeDiff;
+  position[0] += velocity[0] * timeDiff + 0.5 * acceleration[0] * timeDiff * timeDiff;
+  position[1] += velocity[1] * timeDiff + 0.5 * acceleration[1] * timeDiff * timeDiff;
+  position[2] += velocity[2] * timeDiff + 0.5 * acceleration[2] * timeDiff * timeDiff;
 
   // Gyroscope angle calculation
-  angle[0] += g.gyro.x * timeDiff;
-  angle[1] += g.gyro.y * timeDiff;
-  angle[2] += g.gyro.z * timeDiff;
+  angle[0] += gyro[0] * timeDiff;
+  angle[1] += gyro[1] * timeDiff;
+  angle[2] += gyro[2] * timeDiff;
 
   /* Print out the calculated values */
   Serial.print(" Velocity: ");
