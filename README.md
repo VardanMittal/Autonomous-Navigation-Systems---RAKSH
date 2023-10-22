@@ -2,7 +2,7 @@
 Dependencies:
 1. QuickPID - https://github.com/Dlloydev/QuickPID
 2. PWM example - https://randomnerdtutorials.com/esp32-pwm-arduino-ide/
-3. SPI example - https://microcontrollerslab.com/esp32-spi-communication-tutorial-arduino/
+3. SPI example - https://www.arduino.cc/reference/en/language/functions/communication/spi/
 4. task scheduler - https://github.com/arkhipenko/TaskScheduler
 5. MPU6050 example- https://randomnerdtutorials.com/arduino-mpu-6050-accelerometer-gyroscope/
 6. Free RTOS - https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html 
