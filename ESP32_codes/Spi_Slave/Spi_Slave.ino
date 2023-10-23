@@ -6,6 +6,7 @@ float receivedDistance, receivedVelocity;
 char receivedDirection;
 
 void setup() {
+  Serial.begin(115200);
   pinMode(slaveSelect, OUTPUT);
   SPI.begin();
   SPI.setBitOrder(LSBFIRST);
@@ -20,7 +21,10 @@ void loop() {
   digitalWrite(slaveSelect, HIGH);
 
   // Process the received data
-
+  Serial.println("Getting output");
+  Serial.println(receivedDistance);
+  Serial.println(receivedVelocity);
+  Serial.println(receivedDirection);
   // Sending data to Jetson Nano
   int acceleration[3] = {1, 2, 3};
   int velocity[3] = {4, 5, 6};
