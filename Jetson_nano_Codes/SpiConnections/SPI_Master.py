@@ -2,7 +2,7 @@ import spidev
 import time
 
 spi = spidev.SpiDev()
-spi.open(0, 0)  # 0, 0 represents the bus and device (CS pin)
+spi.open(0, 0) 
 
 # Example values to be sent
 distance = 1.5

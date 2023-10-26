@@ -1,5 +1,5 @@
 #include <SPI.h>
-#define slaveSelect 2
+#define slaveSelect 5
 
 int delayTime = 50;
 float receivedDistance, receivedVelocity;
@@ -25,18 +25,27 @@ void loop() {
   Serial.println(receivedDistance);
   Serial.println(receivedVelocity);
   Serial.println(receivedDirection);
+
   // Sending data to Jetson Nano
   int acceleration[3] = {1, 2, 3};
   int velocity[3] = {4, 5, 6};
   int position[3] = {7, 8, 9};
   int angles[3] = {10, 11, 12};
 
-  digitalWrite(slaveSelect, LOW);
-  SPI.transfer(acceleration, 3);
-  SPI.transfer(velocity, 3);
-  SPI.transfer(position, 3);
-  SPI.transfer(angles, 3);
-  digitalWrite(slaveSelect, HIGH);
+  digitalWrite(slaveSelectPin, LOW);
+  for (int i = 0; i < 3; i++) {
+    SPI.transfer(acceleration[i]);
+  }
+  for (int i = 0; i < 3; i++) {
+    SPI.transfer(velocity[i]);
+  }
+  for (int i = 0; i < 3; i++) {
+    SPI.transfer(position[i]);
+  }
+  for (int i = 0; i < 3; i++) {
+    SPI.transfer(angles[i]);
+  }
+  digitalWrite(slaveSelectPin, HIGH);
 
   delay(delayTime);
 }
