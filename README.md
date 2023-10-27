@@ -6,7 +6,7 @@ Dependencies:
 4. task scheduler - https://github.com/arkhipenko/TaskScheduler
 5. MPU6050 example- https://randomnerdtutorials.com/arduino-mpu-6050-accelerometer-gyroscope/
 6. Free RTOS - https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html 
-
+7. jetson CSI - https://www.okdo.com/getting-started/get-started-with-jetson-nano-4gb-and-csi-camera/
 
 
 
