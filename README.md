@@ -5,8 +5,16 @@ Dependencies:
 3. SPI example - https://www.arduino.cc/reference/en/language/functions/communication/spi/
 4. task scheduler - https://github.com/arkhipenko/TaskScheduler
 5. MPU6050 example- https://randomnerdtutorials.com/arduino-mpu-6050-accelerometer-gyroscope/
-6. Free RTOS - https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html 
-7. jetson CSI - https://www.okdo.com/getting-started/get-started-with-jetson-nano-4gb-and-csi-camera/
+6. Free RTOS - https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html
+
+## VSLAM important links
+1. jetson CSI {
+   https://www.okdo.com/getting-started/get-started-with-jetson-nano-4gb-and-csi-camera/ ,
+   https://developer.nvidia.com/embedded/learn/tutorials/first-picture-csi-usb-camera ,
+}
+2. Controls using Ros{
+   Motor controls: https://www.youtube.com/watch?v=-PCuDnpgiew,
+}
 
 
 
