@@ -7,18 +7,18 @@
 float distance, speed;
 char direction;
 
-float count = distance / (pi * WheelDia);
+float count = distance / (3.14 * WheelDia);
 
 // Motor Pin Variables
 #define motorPWM 9
-#define motorIN1 5
-#define motorIN2 6
-#define motorIN3 7
-#define motorIN4 8
-#define encoderA1 2
-#define encoderA2 3
-#define encoderB1 20
-#define encoderB2 21
+#define motorIN1 16
+#define motorIN2 17
+#define motorIN3 14
+#define motorIN4 15
+// #define encoderA1 2
+// #define encoderA2 3
+// #define encoderB1 20
+// #define encoderB2 21
 
 // PID Controller parameters
 float kp = 0.6, ki = 0.3, kd = 0.2;
@@ -29,14 +29,14 @@ float input, output, setpoint;
 QuickPID PID(&input, &output, &setpoint);
 
 // Getting encoder reading (Need to think on how to use these four values togeather)
-int readEncoder()
-{
-  int enc1 = digitalRead(encoderA1);
-  int enc2 = digitalRead(encoderA2);
-  int enc3 = digitalRead(encoderB1);
-  int enc4 = digitalRead(encoderB2);
-  return enc1;
-}
+// int readEncoder()
+// {
+//   int enc1 = digitalRead(encoderA1);
+//   int enc2 = digitalRead(encoderA2);
+//   int enc3 = digitalRead(encoderB1);
+//   int enc4 = digitalRead(encoderB2);
+//   return enc1;
+// }
 
 void setup()
 {
@@ -49,20 +49,22 @@ void setup()
   pinMode(motorIN3, OUTPUT);
   pinMode(motorIN4, OUTPUT);
   // Encoder pin setup
-  pinMode(encoderA1, INPUT_PULLUP);
-  pinMode(encoderA2, INPUT_PULLUP);
-  pinMode(encoderB1, INPUT_PULLUP);
-  pinMode(encoderB2, INPUT_PULLUP);
+  // pinMode(encoderA1, INPUT_PULLUP);
+  // pinMode(encoderA2, INPUT_PULLUP);
+  // pinMode(encoderB1, INPUT_PULLUP);
+  // pinMode(encoderB2, INPUT_PULLUP);
   //Serial beginner
-  Serial.begin(115200);
+  // Serial.begin(115200);
+  direction = 'F';
+  speed = 1;
 }
 
 void loop()
 {
   // PID and PWM control signal updation
   setpoint += count;
-  input = readEncoder();
-  output = PID.compute();
+  // input = readEncoder();
+  output = PID.Compute();
 
 
   //Control logic
